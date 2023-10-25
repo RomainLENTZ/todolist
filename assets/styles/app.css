@@ -4,4 +4,7 @@ html{
 
 body {
     background-color: skyblue;
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
 }

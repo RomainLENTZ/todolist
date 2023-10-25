@@ -23,9 +23,12 @@ class ConfigController extends AbstractController
             $config = $configForm->getData();
 
             $serializedData = $serializer->serialize($config, "json");
-            return $serializedData;
+            $session = $request->getSession();
+            $session->set("config", $serializedData);
 
-            return $this->redirectToRoute('task_success');
+//            dd($session->get("config"));
+
+            return $this->redirectToRoute('app_task');
         }
 
 
