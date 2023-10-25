@@ -11,6 +11,8 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+
 class PersonController extends AbstractController
 {
     #[Route('/person', name: 'app_person')]
@@ -30,12 +32,25 @@ class PersonController extends AbstractController
         $person = new Person();
         $person->setName('Romain');
         $person->setAge(22);
+        $person->setEye('blue');
+        $person->setHair('Brown');
+        $person->setSkin('white');
 
-        $jsonContent = $serializer->serialize($person, 'json');
+        // NE PAS FILTRER LES ATTRIBUTS
+         //$jsonContent = $serializer->serialize($person, 'json');
+
+        // IGNORER
+        //$jsonContent = $serializer->serialize($person, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['age']]);
+
+        // FILTRER PAR ATTRIBUT
+         //$jsonContent = $serializer->serialize($person, 'json',  [AbstractNormalizer::ATTRIBUTES => ['eye']]);
+
+        // FILTRER PAR GROUPE
+         $jsonContent = $serializer->serialize($person, 'json', [AbstractNormalizer::GROUPS => ['passport']]);
+
 
         return $this->render('person/encod.html.twig', [
-            'person' => $person,
-            'json_content' => $jsonContent,
+            'person' => $person, 'json_content' => $jsonContent,
         ]);
     }
 
