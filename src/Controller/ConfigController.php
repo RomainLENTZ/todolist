@@ -8,11 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ConfigController extends AbstractController
 {
     #[Route('/config', name: 'app_config')]
-    public function index(Request $request): Response
+    public function index(Request $request, SerializerInterface $serializer): Response
     {
         $config = new Config();
         $configForm = $this->createForm(ConfigType::class, $config);
@@ -21,7 +22,8 @@ class ConfigController extends AbstractController
         if ($configForm->isSubmitted() && $configForm->isValid()) {
             $config = $configForm->getData();
 
-            dd($config);
+            $serializedData = $serializer->serialize($config, "json");
+            return $serializedData;
 
             return $this->redirectToRoute('task_success');
         }
