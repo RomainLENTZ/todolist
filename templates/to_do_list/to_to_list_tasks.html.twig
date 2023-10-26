@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo list | {{ toDoList.title }}{% endblock %}
+
+{% block body %}
+    <div class="tasks">
+        <div class="waiting-tasks">
+            <h2>Tâches en attentes</h2>
+
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date de création</th>
+                    <th>Date d'éxpiration</th>
+                </tr>
+                {% if toDoList.tasks is not empty %}
+                    {% for task in toDoList.tasks %}
+                        {% if not task.closed %}
+                            <tr>
+                                <td>{{ task.title }}</td>
+                                <td>{{ task.createdAt }}</td>
+                                <td>{{ task.expirationDate }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>Vous n'avez aucune tache en attente</tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div class="finished-tasks">
+            <h2>Tâches achevées</h2>
+
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date de création</th>
+                    <th>Date d'éxpiration</th>
+                </tr>
+                {% if toDoList.tasks is not empty %}
+                    {% for task in toDoList.tasks %}
+                        {% if task.closed %}
+                            <tr>
+                                <td>{{ task.title }}</td>
+                                <td>{{ task.createdAt }}</td>
+                                <td>{{ task.expirationDate }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>Vous n'avez aucune taches achevées</tr>
+                {% endif %}
+            </table>
+        </div>
+
+    </div>
+{% endblock %}

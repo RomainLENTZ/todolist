@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos todo lists{% endblock %}
+
+{% block body %}
+
+<div class="to-do-lists">
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Nombre de taches</th>
+        </tr>
+        {% if toDoLists is not null %}
+            {% for toDoList in toDoLists %}
+                <tr>
+                    <td><a href="{{ path('app_to_do_list_tasks', {id: toDoList.id}) }}">{{ toDoList.title }}</a></td>
+                    <td>{{ toDoList.tasks.count }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <div>Vous n'avez aucune to do list</div>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}
