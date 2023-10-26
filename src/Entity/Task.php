@@ -42,7 +42,6 @@ class Task
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->categories = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
         $this->closed = false;
     }
 
