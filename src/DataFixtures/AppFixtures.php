@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
             $category = new Category();
             $category->setName($categoryItem['name']);
             $category->setColor($categoryItem['color']);
-            $category->setUser($manager->getRepository(User::class)->find((int)floor($key/(4+1))+1)); //12 catégories pour 3 user donc on en met 4 par user
+            $category->setUser($manager->getRepository(User::class)->find($manager->getRepository(User::class)->findAll()[(int)floor($key/(4+1))])); //12 catégories pour 3 user donc on en met 4 par user
             $manager->persist($category);
             var_dump("categorie $key");
         }
@@ -115,7 +115,7 @@ class AppFixtures extends Fixture
         foreach ($toDoLists as $key => $toDoListItem) {
             $toDoList = new ToDoList();
             $toDoList->setTitle($toDoListItem['title']);
-            $toDoList->setUser($manager->getRepository(User::class)->find((int)floor($key/(2+1))+1)); // 6 listes pour 3 user donc on en met 2 par user
+            $toDoList->setUser($manager->getRepository(User::class)->find($manager->getRepository(User::class)->findAll()[(int)floor($key/(2+1))]->getId())); // 6 listes pour 3 user donc on en met 2 par user
             $manager->persist($toDoList);
             var_dump("liste $key");
         }
@@ -132,8 +132,8 @@ class AppFixtures extends Fixture
             $task->setTitle($taskItem['title']);
             $task->setDescription($taskItem['description']);
             $task->setExpirationDate($taskItem['expirationDate']);
-            $task->setToDoList($manager->getRepository(ToDoList::class)->find((int)floor($key/(2+1))+1)); // 12 tâches pour 6 listes donc on en met 2 par liste
-            $task->addCategory($manager->getRepository(Category::class)->find($key+1)); // 12 tâches pour 12 catégories donc on en met 1 par catégorie
+            $task->setToDoList($manager->getRepository(ToDoList::class)->find($manager->getRepository(ToDoList::class)->findAll()[(int)floor($key/(2+1))]->getId())); // 12 tâches pour 6 listes donc on en met 2 par liste
+            $task->addCategory($manager->getRepository(Category::class)->find($manager->getRepository(Category::class)->findAll()[$key]->getId())); // 12 tâches pour 12 catégories donc on en met 1 par catégorie
             $manager->persist($task);
             var_dump("tâche $key");
         }
