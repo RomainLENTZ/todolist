@@ -8,3 +8,15 @@ body {
     max-width: 800px;
     width: 95%;
 }
+
+.to-do-lists table{
+    width: 100%;
+}
+
+.to-do-lists table tr{
+    text-align: left;
+}
+
+.to-do-lists table th{
+    width: 50%;
+}

@@ -40,6 +40,7 @@ class Task
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->categories = new ArrayCollection();
     }
 

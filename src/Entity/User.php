@@ -32,6 +32,9 @@ class User
 
     public function __construct()
     {
+        $this->username = "Brendan Pilkington";
+        $this->email = "brendan.pilkington@wanadoo.fr";
+        $this->password = "12345";
         $this->categories = new ArrayCollection();
         $this->toDoLists = new ArrayCollection();
     }
