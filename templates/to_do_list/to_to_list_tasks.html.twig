@@ -43,8 +43,8 @@
                         {% if task.closed %}
                             <tr>
                                 <td>{{ task.title }}</td>
-                                <td>{{ task.createdAt }}</td>
-                                <td>{{ task.expirationDate }}</td>
+                                <td>{{ task.createdAt | date("m/d/Y") }}</td>
+                                <td>{{ task.expirationDate | date("m/d/Y") }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}

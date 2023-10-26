@@ -18,4 +18,12 @@ class TaskController extends AbstractController
             'configJson' => $configJson
         ]);
     }
+
+
+    #[Route('/task/{toDoListId}/add', name: 'app_task')]
+    public function addTask(int $toDoListId): Response
+    {
+//      dd($request->getSession()->get("config"));
+        return $this->render('task/add_task.html.twig');
+    }
 }
