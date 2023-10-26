@@ -41,6 +41,8 @@ class Task
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->closed = false;
     }
 
     public function getId(): ?int
