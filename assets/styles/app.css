@@ -9,14 +9,32 @@ body {
     width: 95%;
 }
 
-.to-do-lists table{
+table{
     width: 100%;
 }
 
-.to-do-lists table tr{
+table tr{
     text-align: left;
 }
 
 .to-do-lists table th{
     width: 50%;
+}
+
+.tasks, .to-do-lists{
+    margin-bottom: 50px;
+}
+
+
+.btn{
+    text-decoration: none;
+    color: white;
+    background-color: #a78bfa;
+    border-radius: 5px;
+    padding: 10px 25px;
+    transition: ease 0.2s;
+}
+
+.btn:hover{
+    background-color: #9776ff;
 }
