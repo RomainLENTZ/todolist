@@ -47,7 +47,7 @@ class TaskController extends AbstractController
             $task->setToDoList($toDoList);
             $entityManager->persist($task);
             $entityManager->flush();
-            //dd($task);
+
             return $this->redirectToRoute('app_to_do_list');
         }
         return $this->render('task/add_task.html.twig', [

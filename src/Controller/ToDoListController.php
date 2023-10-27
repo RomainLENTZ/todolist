@@ -20,9 +20,17 @@ class ToDoListController extends AbstractController
     #[Route('/todolist', name: 'app_to_do_list')]
     public function index(ToDoListRepository $repository): Response
     {
-        return $this->render('to_do_list/index.html.twig', [
-            'toDoLists' => $repository->findAll(),
-        ]);
+
+        if($this->getUser() != null){
+            $user = $this->getUser();
+            $userToDoList = $user->getToDoLists();
+            return $this->render('to_do_list/index.html.twig', [
+                'toDoLists' => $userToDoList,
+            ]);
+        }
+
+        return $this->redirectToRoute('app_login');
+
     }
 
 
@@ -36,7 +44,8 @@ class ToDoListController extends AbstractController
         if ($addToDoListForm->isSubmitted() && $addToDoListForm->isValid()) {
 
             $todolist = $addToDoListForm->getData();
-            $todolist->setUser(new User());
+            $todolist->setUser($this->getUser());
+
             $entityManager->persist($todolist);
             $entityManager->flush();
 
