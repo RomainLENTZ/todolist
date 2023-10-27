@@ -53,6 +53,9 @@
                 {% endif %}
             </table>
         </div>
-
+    </div>
+    <div style="width: 100%; text-align: center">
+        <a class="btn" href="{{ path('app_add_task', {toDoListId: app.request.get('id')}) }}">Ajouter une tache</a>
+        <a class="btn" href="{{ path('app_add_category') }}">Ajouter une categorie</a>
     </div>
 {% endblock %}

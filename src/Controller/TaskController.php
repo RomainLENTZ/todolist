@@ -2,6 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Task;
+use App\Form\TaskType;
+use App\Repository\CategoryRepository;
+use App\Repository\ToDoListRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +26,32 @@ class TaskController extends AbstractController
     }
 
 
-    #[Route('/task/{toDoListId}/add', name: 'app_task')]
-    public function addTask(int $toDoListId): Response
+    #[Route('/task/{toDoListId}/add', name: 'app_add_task')]
+    public function addTask(int $toDoListId, Request $request, EntityManagerInterface $entityManager, ToDoListRepository $toDoListRepository): Response
     {
-//      dd($request->getSession()->get("config"));
-        return $this->render('task/add_task.html.twig');
+        $task = new Task();
+
+        $toDoList = $toDoListRepository->find($toDoListId);
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if($toDoList == null){
+                return $this->render('task/add_task.html.twig', [
+                    'form' => $form
+                ]);
+            }
+
+            $task = $form->getData();
+            $task->setToDoList($toDoList);
+            $entityManager->persist($task);
+            $entityManager->flush();
+            //dd($task);
+            return $this->redirectToRoute('app_to_do_list');
+        }
+        return $this->render('task/add_task.html.twig', [
+            'form' => $form
+        ]);
     }
 }

@@ -17,9 +17,12 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 1, max: 255, minMessage: "Le nom doit avoir une longueur d'au moins 1 charactère",maxMessage: "Le titre ne peut pas avoir une longueur de plus de 255 charactères")]
+    #[Assert\NotNull(message: 'Vous devez renseigner un nom')]
     private ?string $title = null;
 
     #[ORM\Column(length: 999, nullable: true)]
+    #[Assert\Length(max: 999, maxMessage: "La description ne peut pas avoir une longueur de plus de 999 charactères")]
     private ?string $description = null;
 
     #[ORM\Column]

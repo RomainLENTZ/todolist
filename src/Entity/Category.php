@@ -21,7 +21,7 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categories')]
+    #[ORM\ManyToOne(inversedBy: 'categories', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -99,5 +99,9 @@ class Category
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
     }
 }
