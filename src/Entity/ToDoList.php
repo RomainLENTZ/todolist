@@ -21,12 +21,13 @@ class ToDoList
     #[Assert\NotNull(message: 'Vous devez renseigner un nom')]
     private ?string $title = null;
 
-    #[ORM\ManyToOne(inversedBy: 'toDoLists', cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'toDoList', targetEntity: Task::class, orphanRemoval: true)]
     private Collection $tasks;
+
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'toDoLists')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -57,18 +58,6 @@ class ToDoList
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Task>
      */
@@ -95,6 +84,18 @@ class ToDoList
                 $task->setToDoList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

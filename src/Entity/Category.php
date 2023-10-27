@@ -21,12 +21,13 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categories', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'categories')]
+    private Collection $tasks;
+
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'categories')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'categories')]
-    private Collection $tasks;
 
     public function __construct()
     {
@@ -62,18 +63,6 @@ class Category
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Task>
      */
@@ -103,5 +92,17 @@ class Category
 
     public function __toString(){
         return $this->name;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
