@@ -59,4 +59,25 @@ class ToDoListController extends AbstractController
         ]);
     }
 
+    #[Route('/todolist/{id}/edit', name: 'app_edit_to_do_list')]
+    public function editToDoList(int $id, ToDoListRepository $toDoListRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $toDoList = $toDoListRepository->find($id);
+
+        $form = $this->createForm(ToDoListType::class, $toDoList);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_to_do_list');
+        }
+
+        return $this->render('to_do_list/edit_to_do_list.html.twig', [
+            'toDoList' => $toDoList,
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

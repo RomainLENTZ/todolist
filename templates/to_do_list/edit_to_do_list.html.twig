@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer la to-do liste{% endblock %}
+
+{% block body %}
+
+    <h1>Editer la to-do liste</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_to_do_list') }}">Retour</a>
+
+{% endblock %}

@@ -17,6 +17,7 @@
                 <tr>
                     <td><a href="{{ path('app_to_do_list_tasks', {id: toDoList.id}) }}">{{ toDoList.title }}</a></td>
                     <td>{{ toDoList.tasks.count }}</td>
+                    <td> <a class="btn" href="{{ path('app_edit_to_do_list', {"id": toDoList.id }) }}">Editer</a> </td>
                 </tr>
             {% endfor %}
         {% else %}
