@@ -22,13 +22,9 @@
                 <td>{{ user.email }}</td>
                 <td>
                     <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-danger">Delete</a>
-                    {# Add more actions or buttons as needed #}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    {# Add a link to return to the main dashboard or other actions #}
-{#    <a href="{{ path('dashboard') }}" class="btn btn-primary">Return to Dashboard</a>#}
 {% endblock %}
