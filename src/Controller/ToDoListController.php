@@ -83,4 +83,18 @@ class ToDoListController extends AbstractController
         ]);
     }
 
+    #[Route('/todolist/{id}/delete', name: 'app_delete_to_do_list')]
+    public function deleteToDoList(int $id, ToDoListRepository $toDoListRepository, EntityManagerInterface $entityManager): Response
+    {
+        $toDoList = $toDoListRepository->find($id);
+        if($toDoList === null) {
+            return $this->redirectToRoute('app_to_do_list'); //si la liste n'existe pas on redirige vers la liste des listes
+        }
+
+        $entityManager->remove($toDoList);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_to_do_list');
+    }
+
 }

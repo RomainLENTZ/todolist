@@ -11,6 +11,10 @@
     {{ form_row(form.submit) }}
     {{ form_end(form) }}
 
-    <a href="{{ path('app_to_do_list') }}">Retour</a>
+    <br>
+
+    <a class="btn" href="{{ path('app_delete_to_do_list', {id: toDoList.id}) }}">Supprimer</a>
+
+    <a class="btn" href="{{ path('app_to_do_list') }}">Retour</a>
 
 {% endblock %}
