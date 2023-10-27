@@ -40,9 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->username = "Brendan Pilkington";
-        $this->email = "brendan.pilkington@wanadoo.fr";
-        $this->password = "12345";
         $this->roles = ['ROLE_USER'];
         $this->categories = new ArrayCollection();
         $this->toDoLists = new ArrayCollection();
@@ -189,10 +186,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
-
-
-
-
 }
