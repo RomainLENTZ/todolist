@@ -63,6 +63,9 @@ class ToDoListController extends AbstractController
     public function editToDoList(int $id, ToDoListRepository $toDoListRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $toDoList = $toDoListRepository->find($id);
+        if($toDoList === null) {
+            return $this->redirectToRoute('app_to_do_list'); //si la liste n'existe pas on redirige vers la liste des listes
+        }
 
         $form = $this->createForm(ToDoListType::class, $toDoList);
 
