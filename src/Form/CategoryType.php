@@ -21,12 +21,12 @@ class CategoryType extends AbstractType
                 'error_bubbling' => true,
             ])
             ->add('color', ColorType::class, [
-                'label' => 'Couleur de la tâche',
+                'label' => 'Couleur de la catégorie',
                 'required' => true,
                 'error_bubbling' => true,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Créer'
+                'label' => 'Envoyer'
             ])
         ;
     }

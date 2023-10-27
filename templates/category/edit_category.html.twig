@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer une catégorie{% endblock %}
+
+{% block body %}
+<h1>Éditer la Catégorie</h1>
+
+{{ form_start(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.color) }}
+{{ form_row(form.submit) }}
+{{ form_end(form) }}
+
+<a href="{{ path('app_categories') }}">Retour à la liste des catégories</a>
+{% endblock %}

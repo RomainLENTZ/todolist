@@ -29,12 +29,51 @@ class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_to_do_list');
+            return $this->redirectToRoute('app_categories');
         }
 
 
         return $this->render('category/add_category.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/categories', name: 'app_categories')]
+    public function categories(EntityManagerInterface $entityManager): Response
+    {
+        $categories = $entityManager->getRepository(Category::class)->findAll();
+
+        return $this->render('category/index.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
+    #[Route('/category/delete/{id}', name: 'app_delete_category')]
+    public function deleteCategory(EntityManagerInterface $entityManager, Category $category): Response
+    {
+        $entityManager->remove($category);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_categories');
+    }
+
+    #[Route('/category/edit/{id}', name: 'app_edit_category')]
+    public function editCategory(Request $request, EntityManagerInterface $entityManager, Category $category): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $category = $form->getData();
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_categories');
+        }
+
+        return $this->render('category/edit_category.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
