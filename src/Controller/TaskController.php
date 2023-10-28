@@ -47,7 +47,7 @@ class TaskController extends AbstractController
             $task->setToDoList($toDoList);
             $entityManager->persist($task);
             $entityManager->flush();
-            return $this->redirectToRoute('app_to_do_list');
+            return $this->redirectToRoute('app_to_do_list_tasks', ['id' => $toDoList->getId()]);
         }
         return $this->render('task/add_task.html.twig', [
             'form' => $form
@@ -76,7 +76,7 @@ class TaskController extends AbstractController
             $task->setCategory($category);
             $entityManager->persist($task);
             $entityManager->flush();
-            return $this->redirectToRoute('app_to_do_list');
+            return $this->redirectToRoute('app_to_do_list_tasks', ['id' => $toDoList->getId()]);
         }
         return $this->render('task/edit_task.html.twig', [
             'form' => $form
@@ -89,6 +89,16 @@ class TaskController extends AbstractController
         $task = $entityManager->getRepository(Task::class)->find($id);
         $entityManager->remove($task);
         $entityManager->flush();
-        return $this->redirectToRoute('app_to_do_list');
+        return $this->redirectToRoute('app_to_do_list_tasks', ['id' => $task->getToDoList()->getId()]);
+    }
+
+    #[Route('/task/{id}/close', name: 'app_close_task')]
+    public function closeTask(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $task = $entityManager->getRepository(Task::class)->find($id);
+        $task->setClosed(true);
+        $entityManager->persist($task);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_to_do_list_tasks', ['id' => $task->getToDoList()->getId()]);
     }
 }

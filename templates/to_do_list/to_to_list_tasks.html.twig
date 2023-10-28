@@ -20,6 +20,9 @@
                                 <td>{{ task.title }}</td>
                                 <td>{{ task.createdAt | date("m/d/Y") }}</td>
                                 <td>{{ task.expirationDate | date("m/d/Y")  }}</td>
+                                <td><a href="{{ path('app_close_task', {id: task.id}) }}">Fermer</a></td>
+                                <td><a href="{{ path('app_edit_task', {id: task.id}) }}">Editer</a></td>
+                                <td><a href="{{ path('app_delete_task', {id: task.id}) }}">Supprimer</a></td>
                             </tr>
                         {% endif %}
                     {% endfor %}
