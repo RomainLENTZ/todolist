@@ -47,11 +47,48 @@ class TaskController extends AbstractController
             $task->setToDoList($toDoList);
             $entityManager->persist($task);
             $entityManager->flush();
-            //dd($task);
             return $this->redirectToRoute('app_to_do_list');
         }
         return $this->render('task/add_task.html.twig', [
             'form' => $form
         ]);
+    }
+
+    #[Route('/task/{id}/edit', name: 'app_edit_task')]
+    public function editTask(int $id, Request $request, EntityManagerInterface $entityManager, ToDoListRepository $toDoListRepository, CategoryRepository $categoryRepository): Response
+    {
+        $task = $entityManager->getRepository(Task::class)->find($id);
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+        $toDoList = $toDoListRepository->find($task->getToDoList()->getId());
+        $category = $categoryRepository->find($task->getCategory()->getId());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if($toDoList == null){
+                return $this->render('task/edit_task.html.twig', [
+                    'form' => $form
+                ]);
+            }
+
+            $task = $form->getData();
+            $task->setToDoList($toDoList);
+            $task->setCategory($category);
+            $entityManager->persist($task);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_to_do_list');
+        }
+        return $this->render('task/edit_task.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/task/{id}/delete', name: 'app_delete_task')]
+    public function deleteTask(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $task = $entityManager->getRepository(Task::class)->find($id);
+        $entityManager->remove($task);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_to_do_list');
     }
 }
