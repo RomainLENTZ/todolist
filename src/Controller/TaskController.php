@@ -62,7 +62,9 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         $toDoList = $toDoListRepository->find($task->getToDoList()->getId());
-        $category = $categoryRepository->find($task->getCategory()->getId());
+
+        $categories = $task->getCategories();
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -74,13 +76,18 @@ class TaskController extends AbstractController
 
             $task = $form->getData();
             $task->setToDoList($toDoList);
-            $task->setCategory($category);
+
+            foreach ($categories as $category) {
+                $task->addCategory($category);
+            }
+
             $entityManager->persist($task);
             $entityManager->flush();
             return $this->redirectToRoute('app_to_do_list_tasks', ['id' => $toDoList->getId()]);
         }
         return $this->render('task/edit_task.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'task' => $task,
         ]);
     }
 

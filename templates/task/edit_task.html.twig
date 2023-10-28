@@ -6,11 +6,11 @@
 <h1>Éditer la Tâche</h1>
 
 {{ form_start(form) }}
-    {{ form_row(form.name) }}
+    {{ form_row(form.title) }}
     {{ form_row(form.description) }}
-    {{ form_row(form.dueDate) }}
+    {{ form_row(form.expirationDate) }}
     {{ form_row(form.submit) }}
     {{ form_end(form) }}
 
-<a href="{{ path('task_list') }}">Retour à la liste des tâches</a>
+<a href="{{ path('app_to_do_list_tasks', {"id" : task.getToDoList().getId()}) }}">Retour à la liste des tâches</a>
 {% endblock %}
