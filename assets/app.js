@@ -9,3 +9,5 @@ import * as session from "./js/session.js"
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
 
 session.setSessionConfig()
+
+//display none sur les éléments en trop
