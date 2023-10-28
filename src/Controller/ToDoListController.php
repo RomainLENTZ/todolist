@@ -93,8 +93,8 @@ class ToDoListController extends AbstractController
     }
 
     #[Route('/todolist/{id}/delete', name: 'app_delete_to_do_list')]
-    #[IsGranted('access', 'category', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
-    public function deleteToDoList(int $id, ToDoListRepository $toDoListRepository, EntityManagerInterface $entityManager): Response
+    #[IsGranted('access', 'toDoList', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
+    public function deleteToDoList(int $id, ToDoListRepository $toDoListRepository, EntityManagerInterface $entityManager, ToDoList $toDoList): Response
     {
         $toDoList = $toDoListRepository->find($id);
         if($toDoList === null) {
