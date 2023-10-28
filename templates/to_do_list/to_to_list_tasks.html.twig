@@ -7,55 +7,53 @@
         <div class="waiting-tasks">
             <h2>Tâches en attentes</h2>
 
-            <table>
-                <tr>
-                    <th>Nom</th>
-                    <th>Date de création</th>
-                    <th>Date d'éxpiration</th>
-                </tr>
+
+            <div class="tasks-list">
                 {% if toDoList.tasks is not empty %}
                     {% for task in toDoList.tasks %}
                         {% if not task.closed %}
-                            <tr>
-                                <td>{{ task.title }}</td>
-                                <td>{{ task.createdAt | date("m/d/Y") }}</td>
-                                <td>{{ task.expirationDate | date("m/d/Y")  }}</td>
-                            </tr>
+                            <div class="card">
+                                <h3>{{ task.title }}</h3>
+                                {% if task.description is not null %}
+                                    <p>{{ task.description }}</p>
+                                {% endif %}
+                                <div class="date">
+                                    <p>📅{{ task.createdAt | date("m/d/Y") }}</p>
+                                    <p>Expire le : {{ task.expirationDate | date("m/d/Y")  }}</p>
+                                </div>
+                            </div>
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <tr>Vous n'avez aucune tache en attente</tr>
+                    <p>Vous n'avez aucune tache en attente</p>
                 {% endif %}
-            </table>
+
+            </div>
         </div>
 
         <div class="finished-tasks">
             <h2>Tâches achevées</h2>
 
-            <table>
-                <tr>
-                    <th>Nom</th>
-                    <th>Date de création</th>
-                    <th>Date d'éxpiration</th>
-                </tr>
-                {% if toDoList.tasks is not empty %}
-                    {% for task in toDoList.tasks %}
-                        {% if task.closed %}
-                            <tr>
-                                <td>{{ task.title }}</td>
-                                <td>{{ task.createdAt | date("m/d/Y") }}</td>
-                                <td>{{ task.expirationDate | date("m/d/Y") }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <tr>Vous n'avez aucune taches achevées</tr>
-                {% endif %}
-            </table>
+            {% if toDoList.tasks is not empty %}
+                {% for task in toDoList.tasks %}
+                    {% if task.closed %}
+                        <div class="card">
+                            <h3>{{ task.title }}</h3>
+                            {% if task.description is not null %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
+                            <div class="date">
+                                <p>📅{{ task.createdAt | date("m/d/Y") }}</p>
+                                <p>Expire le : {{ task.expirationDate | date("m/d/Y")  }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
     <div style="width: 100%; text-align: center">
-        <a class="btn" href="{{ path('app_add_task', {toDoListId: app.request.get('id')}) }}">Ajouter une tache</a>
+        <a class="btn" href="{{ path('app_add_task', {id: app.request.get('id')}) }}">Ajouter une tache</a>
         <a class="btn" href="{{ path('app_add_category') }}">Ajouter une categorie</a>
     </div>
 {% endblock %}

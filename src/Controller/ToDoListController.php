@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ToDoListController extends AbstractController
 {
@@ -59,19 +60,18 @@ class ToDoListController extends AbstractController
     }
 
     #[Route('/todolist/{id}/tasks', name: 'app_to_do_list_tasks')]
-    public function toDoListTasks(int $id, ToDoListRepository $toDoListRepository): Response
+    #[IsGranted('access', 'toDoList', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
+    public function toDoListTasks(ToDoList $toDoList, ToDoListRepository $toDoListRepository): Response
     {
-        $toDoList = $toDoListRepository->find($id);
-
         return $this->render('to_do_list/to_to_list_tasks.html.twig', [
             'toDoList' => $toDoList,
         ]);
     }
 
     #[Route('/todolist/{id}/edit', name: 'app_edit_to_do_list')]
-    public function editToDoList(int $id, ToDoListRepository $toDoListRepository, Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('access', 'toDoList', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
+    public function editToDoList(ToDoList $toDoList, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $toDoList = $toDoListRepository->find($id);
         if($toDoList === null) {
             return $this->redirectToRoute('app_to_do_list'); //si la liste n'existe pas on redirige vers la liste des listes
         }
@@ -93,6 +93,7 @@ class ToDoListController extends AbstractController
     }
 
     #[Route('/todolist/{id}/delete', name: 'app_delete_to_do_list')]
+    #[IsGranted('access', 'category', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
     public function deleteToDoList(int $id, ToDoListRepository $toDoListRepository, EntityManagerInterface $entityManager): Response
     {
         $toDoList = $toDoListRepository->find($id);

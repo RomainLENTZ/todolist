@@ -4,26 +4,26 @@
 
 {% block body %}
 
-<h1 style="text-align: center">Vos todo lists</h1>
+<h2 >Vos todo lists</h2>
 
 <div class="to-do-lists">
-    <table>
-        <tr>
-            <th>Nom</th>
-            <th>Nombre de taches</th>
-        </tr>
-        {% if toDoLists is not null %}
-            {% for toDoList in toDoLists %}
-                <tr>
-                    <td><a href="{{ path('app_to_do_list_tasks', {id: toDoList.id}) }}">{{ toDoList.title }}</a></td>
-                    <td>{{ toDoList.tasks.count }}</td>
-                    <td> <a class="btn" href="{{ path('app_edit_to_do_list', {"id": toDoList.id }) }}">Editer</a> </td>
-                </tr>
-            {% endfor %}
-        {% else %}
-            <div>Vous n'avez aucune to do list</div>
-        {% endif %}
-    </table>
+    {% if toDoLists is not null %}
+        {% for toDoList in toDoLists %}
+            <div class="card card-todo">
+                <div>
+                    <a href="{{ path('app_to_do_list_tasks', {id: toDoList.id}) }}">
+                        <h3>{{ toDoList.title }}</h3>
+                        <p>Nombre de tache : {{ toDoList.tasks.count }}</p>
+                    </a>
+                </div>
+                <div>
+                    <a class="btn" href="{{ path('app_edit_to_do_list', {"id": toDoList.id }) }}">Editer</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div>Vous n'avez aucune to do list</div>
+    {% endif %}
 </div>
 <div style="width: 100%; text-align: center">
     <a class="btn" href="{{ path('app_add_to_do_list') }}">Ajouter une todo list</a>
