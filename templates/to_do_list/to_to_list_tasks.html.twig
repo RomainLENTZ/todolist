@@ -21,6 +21,11 @@
                                     <p>📅{{ task.createdAt | date("m/d/Y") }}</p>
                                     <p>Expire le : {{ task.expirationDate | date("m/d/Y")  }}</p>
                                 </div>
+                                <div>
+                                    <div><a href="{{ path('app_close_task', {id: task.id}) }}">Fermer</a></div>
+                                    <div><a href="{{ path('app_edit_task', {id: task.id}) }}">Editer</a></div>
+                                    <div><a href="{{ path('app_delete_task', {id: task.id}) }}">Supprimer</a></div>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}

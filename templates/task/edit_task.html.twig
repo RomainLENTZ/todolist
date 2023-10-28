@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer une tâche{% endblock %}
+
+{% block body %}
+<h1>Éditer la Tâche</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.dueDate) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+<a href="{{ path('task_list') }}">Retour à la liste des tâches</a>
+{% endblock %}
