@@ -9,6 +9,10 @@ Ce site web est un site permettant de créer des todolist.
 Chaque todo lists peut contenir des taches. Les taches peuvent être associées à des catégories.
 
 Une partie admin est disponible, elle permet de supprimer un utilisateur.
+Le compte admin est créé grâce à des fixtures.
+
+user : admin <br>
+password : admin
 
 
 Installation du projet :
@@ -19,7 +23,7 @@ Pour installer le projet :
 Clonez le repository grâce a cette commande :
 
 ````
-https://github.com/RomainLENTZ/todolist.git
+git clone https://github.com/RomainLENTZ/todolist.git
 ````
 
 Par la suite, vous pouvez exécuter la commande :
@@ -58,4 +62,3 @@ Pour éxécuter la commande de fixtures, vous devez utiliser la commande :
 ````
 symfony console doctrine:fixtures:load --env=test
 ````
-
