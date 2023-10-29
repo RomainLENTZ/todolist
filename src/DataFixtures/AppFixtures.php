@@ -74,6 +74,7 @@ class AppFixtures extends Fixture
             ["username" => "user1", "email" => "user1@gmail.com", "password" => "user1"],
             ["username" => "user2", "email" => "user2@gmail.com", "password" => "user2"],
             ["username" => "user3", "email" => "user3@gmail.com", "password" => "user3"],
+            ["username" => "admin", "email" => "admin@gmail.com", "password" => "admin", "roles" => ["ROLE_ADMIN"]],
         ];
     }
 
@@ -86,6 +87,11 @@ class AppFixtures extends Fixture
             $user->setUsername($userItem['username']);
             $user->setEmail($userItem['email']);
             $user->setPassword($userItem['password']);
+
+            if (isset($userItem['roles'])) {
+                $user->setRoles($userItem['roles']);
+            }
+
             $manager->persist($user);
         }
 
