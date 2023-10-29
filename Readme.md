@@ -46,9 +46,16 @@ php bin/console doctrine:fixtures:load
 
 La base de données est maintenant alimentée. Vous n'avez plus qu'a lancer le serveur en utilisant la commande :  
 ````
- symfony server:start
- ````
+symfony server:start
+````
 
 Créer des user en utilisant notre commande :
--
+````
+php bin/console app:create-user
+````
+
+Pour éxécuter la commande de fixtures, vous devez utiliser la commande :
+````
+symfony console doctrine:fixtures:load --env=test
+````
 
