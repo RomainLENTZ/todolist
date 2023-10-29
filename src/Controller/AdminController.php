@@ -16,6 +16,7 @@ class AdminController extends AbstractController
         $this->em = $em;
     }
 
+
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ToDoListController extends AbstractController
 {
-    #[Route('/todolist', name: 'app_to_do_list')]
+    #[Route('/', name: 'app_to_do_list')]
     public function index(ToDoListRepository $repository): Response
     {
 
