@@ -1,5 +1,11 @@
 export function setSessionConfig(){
-    let config = document.querySelector(".tasks-container").getAttribute("data-config");
+    let element = document.querySelector(".tasks-container");
+    if(element == null){
+        return;
+    }
+    let config = element.getAttribute("data-config");
 
-    console.log(config)
+    if(sessionStorage.getItem("config") != config || sessionStorage.getItem("config") == null){
+        sessionStorage.setItem("config", config);
+    }
 }

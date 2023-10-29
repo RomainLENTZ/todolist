@@ -10,4 +10,11 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
 
 session.setSessionConfig()
 
-//display none sur les éléments en trop
+let configSession = sessionStorage.getItem("config");
+let tasks = document.querySelectorAll(".tasks-list .card");
+
+for(let i = 0; i < tasks.length; i++){
+    if(i > JSON.parse(configSession).numberOfResult - 1){
+        tasks[i].style.display = "none";
+    }
+}
