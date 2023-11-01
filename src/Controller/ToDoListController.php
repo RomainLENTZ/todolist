@@ -61,8 +61,25 @@ class ToDoListController extends AbstractController
 
     #[Route('/todolist/{id}/tasks', name: 'app_to_do_list_tasks')]
     #[IsGranted('access', 'toDoList', 'Oooops, it looks like you\'re trying to access things you don\'t have permission for... 🧐 Get out of here little freak !! 🔙', 404)]
-    public function toDoListTasks(ToDoList $toDoList, ToDoListRepository $toDoListRepository): Response
+    public function toDoListTasks(ToDoList $toDoList, ToDoListRepository $toDoListRepository, Request $request): Response
     {
+        if(json_decode($request->getSession()->get('config'))->sortOrder != null){
+            $sortOrder = json_decode($request->getSession()->get('config'))->sortOrder;
+            $tasks = $toDoList->getTasks()->toArray();
+            usort($tasks, function($a, $b) use ($sortOrder) {
+                if($sortOrder == 'asc'){
+                    return $a->getCreatedAt() > $b->getCreatedAt();
+                }else{
+                    return $a->getCreatedAt() < $b->getCreatedAt();
+                }
+            });
+
+            foreach ($tasks as $task) {
+                $toDoList->removeTask($task);
+                $toDoList->addTask($task);
+            }
+        }
+
         return $this->render('to_do_list/to_to_list_tasks.html.twig', [
             'toDoList' => $toDoList,
         ]);
