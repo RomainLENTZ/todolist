@@ -28,7 +28,7 @@ class ConfigController extends AbstractController
 
 //            dd($session->get("config"));
 
-            return $this->redirectToRoute('app_task');
+            return $this->redirectToRoute('app_to_do_list');
         }
 
 
