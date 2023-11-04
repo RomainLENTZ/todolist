@@ -25,9 +25,11 @@
     {% else %}
         <div>Vous n'avez aucune to do list</div>
     {% endif %}
+
 </div>
 <div style="width: 100%; text-align: center">
     <a class="btn" href="{{ path('app_add_to_do_list') }}">Ajouter une todo list</a>
+    <a class="btn" href="{{ path('app_config') }}">Config</a>
 </div>
 
 {% endblock %}
