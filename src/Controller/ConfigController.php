@@ -16,6 +16,14 @@ class ConfigController extends AbstractController
     public function index(Request $request, SerializerInterface $serializer): Response
     {
         $config = new Config();
+
+        $session = $request->getSession();
+        $serializedData = $session->get("config");
+        if($serializedData) {
+            $config->setSortOrder($serializer->deserialize($serializedData, Config::class, "json")->getSortOrder());
+            $config->setNumberOfResult($serializer->deserialize($serializedData, Config::class, "json")->getNumberOfResult());
+        }
+
         $configForm = $this->createForm(ConfigType::class, $config);
 
         $configForm->handleRequest($request);
@@ -31,7 +39,7 @@ class ConfigController extends AbstractController
 
 
         return $this->render('config/index.html.twig', [
-            'configForm' => $configForm->createView(),
+            'configForm' => $configForm->createView()
         ]);
     }
 }
