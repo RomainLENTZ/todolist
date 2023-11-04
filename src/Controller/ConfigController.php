@@ -26,8 +26,6 @@ class ConfigController extends AbstractController
             $session = $request->getSession();
             $session->set("config", $serializedData);
 
-//            dd($session->get("config"));
-
             return $this->redirectToRoute('app_to_do_list');
         }
 
